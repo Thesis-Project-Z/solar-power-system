@@ -19,10 +19,10 @@ connection.once('open', () => {
 });
 
 const systemsRouter = require('./routes/systems');
-const usersRouter = require('./routes/users');
+const authRoute = require('./routes/auth');
 
 app.use('/systems', systemsRouter);
-app.use('/users', usersRouter);
+app.use('/api/user', authRoute);
 
 
 app.listen(port, () => {
