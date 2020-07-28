@@ -2,12 +2,15 @@ import React from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline"
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Container,Typography } from "@material-ui/core";
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, Container,Typography, Input } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import InfoIcon from "@material-ui/icons/Info";
 import Home from "./components/Index";
-import Resume from "./components/Resume";
+import Resume from "./components/Input";
 import Contacts from "./components/Contacts";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import Navbar from "./components/Navbar";
 
 
 
@@ -26,10 +29,12 @@ function App() {
   return (
     
     <Router>
-    
-    
+      <Navbar/>
+    <CssBaseline/>
+    <Route path="/signup" component={SignUp}/>
+    <Route path="/signin" component={SignIn}/>
     <Route path="/" component={Home} />
-    <Route path="/resume" component={Resume} />
+    <Route path="/input" component={Input} />
     <Route path="/contacts" component={Contacts} />
     </Router>
     

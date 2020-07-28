@@ -1,13 +1,14 @@
 const router = require('express').Router();
 var System = require('../models/system.model')
+const verify = require('./verifyToken');
 
-router.route('/').get((req, res) => {
+router.get('/', ( req, res) => {
   System.find()
     .then(systems => res.json(systems))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/add').post((req, res) => {
+router.post('/add', (req, res) => {
   const kwh = req.body.kwh;
   const area = req.body.area;
   const loadsupport = req.body.loadsupport;
@@ -24,19 +25,19 @@ router.route('/add').post((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').get((req, res) => {
+router.get('/:id', ( req, res ) => {
   System.findById(req.params.id)
     .then(system => res.json(system))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').delete((req, res) => {
+router.delete('/:id',( req, res ) => {
   System.findByIdAndDelete(req.params.id)
     .then(() => res.json('Exercise deleted.'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/update/:id').post((req, res) => {
+router.post('/update/:id', (req, res) => {
   System.findById(req.params.id)
     .then(system => {
       system.area = req.body.area;

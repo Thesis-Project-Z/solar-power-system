@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import MobileRightMenuSlider from "@material-ui/core/Drawer";
-import { BrowserRouter, Link} from 'react-router-dom';
+import { BrowserRouter, Link, withRouter} from 'react-router-dom';
 import {
     AppBar,
     Toolbar,
@@ -19,7 +19,9 @@ import {
     AssignmentInd,
     Home,
     Apps,
-    ContactMail
+    ContactMail,
+    LockOpen,
+    PersonAdd
 } from "@material-ui/icons";
 
 //CSS StyLES
@@ -34,32 +36,53 @@ const useStyles = makeStyles({
     }
    });
 
-   const menuItems = [
-       {
-           listIcon: <Home/>,
-           listText: "Home",
-           listPath: "/"
-       },
-       {
-        listIcon: <AssignmentInd/>,
-        listText: "Resume",
-        listPath: "/resume"
-
-    },
-    {
-        listIcon: <Apps/>,
-        listText: "Portfolio"
-
-    },
-    {
-        listIcon: <ContactMail/>,
-        listText: "Contacts",
-        listPath: "/contacts"
-
-    }
-   ]
-
-const Navbar= () => {
+ 
+const Navbar= (props) => {
+    const menuItems = [
+        {
+            listIcon:<PersonAdd/>,
+            listText: "SignUp",
+            onClick: () => {
+                props.history.push("/signup")
+            }
+        },
+        {
+            listIcon: <LockOpen/>,
+            listText: "SignIn",
+            onClick : () => {
+                props.history.push('/signin')
+            }
+        },
+        {
+            listIcon: <Home/>,
+            listText: "Home",
+            onClick : () => { 
+                props.history.push("/")
+        }
+        },
+        {
+         listIcon: <AssignmentInd/>,
+         listText: "Resume",
+         onClick : () => {
+             props.history.push("/resume")
+         }
+ 
+     },
+     {
+         listIcon: <Apps/>,
+         listText: "Portfolio"
+ 
+     },
+     {
+         listIcon: <ContactMail/>,
+         listText: "Contacts",
+         onClick : () => {
+             props.history.push("/contacts")
+         }
+ 
+     }
+    ]
+ 
     const [state, setState] = useState({
         right:false
     })
@@ -79,7 +102,7 @@ const Navbar= () => {
             <List>
                 {menuItems.map((lsItem, key)=>(
                     <BrowserRouter>
-                <ListItem button key={key} component={Link} to={lsItem.listPath}>
+                <ListItem button key={key} onClick = {lsItem.onClick}>
                     <ListItemIcon className={classes.listItem}>{lsItem.listIcon}</ListItemIcon>
                     <ListItemText className={classes.listItem} primary={lsItem.listText}/>
                 </ListItem>
@@ -99,7 +122,6 @@ const Navbar= () => {
                 </IconButton>
                 <Typography variant="h5" style= {{ color: "tan"}}>Clean Watts</Typography>
                 <MobileRightMenuSlider 
-                anchor="right"
                 open={state.right}
                 onClose={toggleSlider("right", false)}
                 >
@@ -115,4 +137,4 @@ const Navbar= () => {
 
 } 
 
-export default Navbar
+export default withRouter(Navbar);
