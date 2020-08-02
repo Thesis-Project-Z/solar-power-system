@@ -22,7 +22,8 @@ const systemsRouter = require('./routes/systems');
 const authRoute = require('./routes/auth');
 
 app.use('/systems', systemsRouter);
-app.use('/api/user', authRoute);
+app.use('/user', authRoute);
+
 
 
 app.listen(port, () => {

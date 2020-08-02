@@ -20,7 +20,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         max: 1024,
-        min: 6
+        min: 6 
     },
     date: {
         type: Date,
@@ -28,5 +28,6 @@ const userSchema = new Schema({
     }
 });
  const User = mongoose.model('User', userSchema);
+
 
  module.exports = User;

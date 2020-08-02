@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import MobileRightMenuSlider from "@material-ui/core/Drawer";
-import { BrowserRouter, Link} from 'react-router-dom';
+import { BrowserRouter, Link, withRouter} from 'react-router-dom';
 import {
     AppBar,
     Toolbar,
@@ -15,51 +15,75 @@ import {
     Box
 } from "@material-ui/core";
 import {
-    ArrowBack,
+    DehazeRounded,
     AssignmentInd,
     Home,
     Apps,
-    ContactMail
+    Settings,
+    LockOpen,
+    PersonAdd
 } from "@material-ui/icons";
+
 
 //CSS StyLES
 const useStyles = makeStyles({
     menuSliderContainer:{
         width: 250,
-        background:"#511",
+        background:"#1FA91A",
         height: "100%"
     },
     listItem:{
-        color: "tan"
+        color: "#ffffff"
     }
    });
 
-   const menuItems = [
-       {
-           listIcon: <Home/>,
-           listText: "Home",
-           listPath: "/"
-       },
-       {
-        listIcon: <AssignmentInd/>,
-        listText: "Resume",
-        listPath: "/resume"
-
-    },
-    {
-        listIcon: <Apps/>,
-        listText: "Portfolio"
-
-    },
-    {
-        listIcon: <ContactMail/>,
-        listText: "Contacts",
-        listPath: "/contacts"
-
-    }
-   ]
-
-const Navbar= () => {
+ 
+const Navbar= (props) => {
+    const menuItems = [
+        {
+            listIcon:<PersonAdd/>,
+            listText: "SignUp",
+            onClick: () => {
+                props.history.push("/signup")
+            }
+        },
+        {
+            listIcon: <LockOpen/>,
+            listText: "SignIn",
+            onClick : () => {
+                props.history.push('/signin')
+            }
+        },
+        {
+            listIcon: <Home/>,
+            listText: "Home",
+            onClick : () => { 
+                props.history.push("/")
+        }
+        },
+        {
+         listIcon: <AssignmentInd/>,
+         listText: "Create your System",
+         onClick : () => {
+             props.history.push("/input")
+         }
+ 
+     },
+     {
+         listIcon: <Apps/>,
+         listText: "Portfolio"
+ 
+     },
+     {
+         listIcon: <Settings/>,
+         listText: "ResultPage",
+         onClick : () => {
+             props.history.push("/results")
+         }
+ 
+     }
+    ]
+ 
     const [state, setState] = useState({
         right:false
     })
@@ -79,7 +103,7 @@ const Navbar= () => {
             <List>
                 {menuItems.map((lsItem, key)=>(
                     <BrowserRouter>
-                <ListItem button key={key} component={Link} to={lsItem.listPath}>
+                <ListItem button key={key} onClick = {lsItem.onClick}>
                     <ListItemIcon className={classes.listItem}>{lsItem.listIcon}</ListItemIcon>
                     <ListItemText className={classes.listItem} primary={lsItem.listText}/>
                 </ListItem>
@@ -92,14 +116,13 @@ const Navbar= () => {
     return (
         
         <Box component="nav">
-            <AppBar position = "static" style={{ background: "#222"}} >
+            <AppBar position = "static" style={{ background: "#1FA91A"}} >
                 <Toolbar>
                 <IconButton onClick={toggleSlider("right", true)}>
-                    <ArrowBack style={{ color: "tomato"}} />
+                    <DehazeRounded style={{ color: "#fff747"}} />
                 </IconButton>
-                <Typography variant="h5" style= {{ color: "tan"}}>Clean Watts</Typography>
+                <Typography variant="h5" style= {{ color: "#ffffff"}}>Clean Watts</Typography>
                 <MobileRightMenuSlider 
-                anchor="right"
                 open={state.right}
                 onClose={toggleSlider("right", false)}
                 >
@@ -115,4 +138,4 @@ const Navbar= () => {
 
 } 
 
-export default Navbar
+export default withRouter(Navbar);
