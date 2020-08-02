@@ -15,24 +15,25 @@ import {
     Box
 } from "@material-ui/core";
 import {
-    ArrowBack,
+    DehazeRounded,
     AssignmentInd,
     Home,
     Apps,
-    ContactMail,
+    Settings,
     LockOpen,
     PersonAdd
 } from "@material-ui/icons";
+
 
 //CSS StyLES
 const useStyles = makeStyles({
     menuSliderContainer:{
         width: 250,
-        background:"#511",
+        background:"#1FA91A",
         height: "100%"
     },
     listItem:{
-        color: "tan"
+        color: "#ffffff"
     }
    });
 
@@ -62,9 +63,9 @@ const Navbar= (props) => {
         },
         {
          listIcon: <AssignmentInd/>,
-         listText: "Resume",
+         listText: "Create your System",
          onClick : () => {
-             props.history.push("/resume")
+             props.history.push("/input")
          }
  
      },
@@ -74,10 +75,10 @@ const Navbar= (props) => {
  
      },
      {
-         listIcon: <ContactMail/>,
-         listText: "Contacts",
+         listIcon: <Settings/>,
+         listText: "ResultPage",
          onClick : () => {
-             props.history.push("/contacts")
+             props.history.push("/results")
          }
  
      }
@@ -115,12 +116,12 @@ const Navbar= (props) => {
     return (
         
         <Box component="nav">
-            <AppBar position = "static" style={{ background: "#222"}} >
+            <AppBar position = "static" style={{ background: "#1FA91A"}} >
                 <Toolbar>
                 <IconButton onClick={toggleSlider("right", true)}>
-                    <ArrowBack style={{ color: "tomato"}} />
+                    <DehazeRounded style={{ color: "#fff747"}} />
                 </IconButton>
-                <Typography variant="h5" style= {{ color: "tan"}}>Clean Watts</Typography>
+                <Typography variant="h5" style= {{ color: "#ffffff"}}>Clean Watts</Typography>
                 <MobileRightMenuSlider 
                 open={state.right}
                 onClose={toggleSlider("right", false)}

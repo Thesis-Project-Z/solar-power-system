@@ -6,11 +6,11 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText, Container,Typograph
 import HomeIcon from "@material-ui/icons/Home";
 import InfoIcon from "@material-ui/icons/Info";
 import Home from "./components/Index";
-import Resume from "./components/Input";
-import Contacts from "./components/Contacts";
+import InputData from "./components/Input";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Navbar from "./components/Navbar";
+import Results from "./components/Results";
 
 
 
@@ -34,8 +34,8 @@ function App() {
     <Route path="/signup" component={SignUp}/>
     <Route path="/signin" component={SignIn}/>
     <Route path="/" component={Home} />
-    <Route path="/input" component={Input} />
-    <Route path="/contacts" component={Contacts} />
+    <Route path="/input" component={InputData} />
+    <Route path="/results" component={Results} />
     </Router>
     
   );

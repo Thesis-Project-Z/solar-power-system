@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,20 +13,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { green } from '@material-ui/core/colors';
+// import { STATES } from 'mongoose';
+const axios = require('axios')
 
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,10 +38,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignUp() {
-  const classes = useStyles();
+  
+const classes = useStyles();
+const [values,setValues] = useState({ name: "", email: "", password: ""});
+const handleChange = event => {
+  const { name, value } = event.target;
+  
+  setValues({
+    ...values, 
+    [event.target.name]: event.target.value
+  });
+};
 
+const handleSubmit = event => {
+event.preventDefault();
+}
+function submit() {
+  console.log("submitted Succesfully")
+}
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" >
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -68,10 +73,12 @@ function SignUp() {
             required
             fullWidth
             id="name"
+            value={values.name}
             label="Name"
             name="name"
             autoComplete="name"
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -80,9 +87,12 @@ function SignUp() {
             fullWidth
             id="email"
             label="Email Address"
+            value={values.email}
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleChange}
+
           />
           <TextField
             variant="outlined"
@@ -90,14 +100,13 @@ function SignUp() {
             required
             fullWidth
             name="password"
+            value={values.password}
             label="Password"
             type="password"
             id="password"
             autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            onChange={handleChange}
+
           />
           <Button
             type="submit"
@@ -105,6 +114,7 @@ function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onSubmit={handleSubmit}
           >
             Sign Up
           </Button>
@@ -112,7 +122,7 @@ function SignUp() {
             <Grid item xs>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="./signin" variant="body2">
                 {"Already have an account? Sign In"}
               </Link>
             </Grid>
@@ -120,9 +130,8 @@ function SignUp() {
         </form>
       </div>
       <Box mt={8}>
-        <Copyright />
       </Box>
     </Container>
   );
-}
+  };
 export default SignUp;
