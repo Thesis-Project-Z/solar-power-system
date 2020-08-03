@@ -10,14 +10,11 @@ router.get('/', ( req, res) => {
 
 router.post('/add', (req, res) => {
   const kwh = req.body.kwh;
-  const area = req.body.area;
-  const loadsupport = req.body.loadsupport;
-  
+  const area = req.body.area;  
 
   const newSystem = new System({
     area,
-    kwh,
-    loadsupport
+    kwh
   });
 
   newSystem.save()
@@ -42,8 +39,7 @@ router.post('/update/:id', (req, res) => {
     .then(system => {
       system.area = req.body.area;
       system.kwh = req.body.kwh;
-      system.loadsupport = req.body.loadsupport;
-
+      
       system.save()
         .then(() => res.json('System updated!'))
         .catch(err => res.status(400).json('Error: ' + err));

@@ -101,7 +101,7 @@ function ResultPage() {
           <PersonAddIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+          
         </Typography>
         <form className={classes.form} noValidate>
        

@@ -10,7 +10,7 @@ const port = 5000;
 app.use(cors());
 app.use(express.json());
 
-const uri = process.env.ATLAS_URI;
+const uri = "mongodb+srv://ziyadbarhoum:1234@cluster0.fevez.mongodb.net/solar?retryWrites=true&w=majority";
 mongoose.connect( uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true } );
 
 const connection = mongoose.connection;
