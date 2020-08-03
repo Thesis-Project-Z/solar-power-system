@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,15 +9,15 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { green } from '@material-ui/core/colors';
 // import { STATES } from 'mongoose';
-const axios = require('axios')
+import axios from 'axios';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = theme => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -34,30 +34,69 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-  },
-}));
+  }
+})
 
-function SignUp() {
+class SignUp extends Component {
+constructor(props){
+  super(props);
   
-const classes = useStyles();
-const [values,setValues] = useState({ name: "", email: "", password: ""});
-const handleChange = event => {
-  const { name, value } = event.target;
-  
-  setValues({
-    ...values, 
-    [event.target.name]: event.target.value
-  });
-};
 
-const handleSubmit = event => {
-event.preventDefault();
+  this.onChangeName = this.onChangeName.bind(this);
+  this.onChangeEmail = this.onChangeEmail.bind(this);
+  this.onChangePassword = this.onChangePassword.bind(this);
+  this.onSubmit = this.onSubmit.bind(this);
+
+
+
+  this.state = {
+    name: "",
+    email: "",
+    password: ""
+  }
 }
-function submit() {
-  console.log("submitted Succesfully")
+// componentDidMount() {
+//   this.setState({
+//     name: "asdada",
+//     email:"sdf,kjnkln@.comn",
+//     password:"51378584gjgk"
+//   })
+// }
+
+onChangeName (e) {
+  this.setState({
+    name: e.target.value
+  })
 }
+onChangeEmail (e) {
+  this.setState({
+    email: e.target.value
+  })
+}
+onChangePassword (e) {
+  this.setState({
+    password: e.target.value
+  })
+}
+
+onSubmit(e) {
+  e.preventDefault();
+
+  const user = {
+    name: this.state.name,
+    email: this.state.email,
+    password: this.state.password
+  }
+  axios.post('http://localhost:5000/user/register',user)
+  .then(res => console.log(res.data));
+  console.log(user);
+
+}
+
+render(){
+const {classes} = this.props
   return (
-    <Container component="main" maxWidth="xs" >
+    <Container component="main" maxWidth="xs"   onSubmit={this.onSubmit}>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -73,12 +112,12 @@ function submit() {
             required
             fullWidth
             id="name"
-            value={values.name}
+            value={this.state.name}
             label="Name"
             name="name"
             autoComplete="name"
             autoFocus
-            onChange={handleChange}
+            onChange={this.onChangeName}
           />
           <TextField
             variant="outlined"
@@ -87,11 +126,11 @@ function submit() {
             fullWidth
             id="email"
             label="Email Address"
-            value={values.email}
+            value={this.state.email}
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={handleChange}
+            onChange={this.onChangeEmail}
 
           />
           <TextField
@@ -100,12 +139,12 @@ function submit() {
             required
             fullWidth
             name="password"
-            value={values.password}
+            value={this.state.password}
             label="Password"
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={handleChange}
+            onChange={this.onChangePassword}
 
           />
           <Button
@@ -114,7 +153,8 @@ function submit() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onSubmit={handleSubmit}
+         
+          
           >
             Sign Up
           </Button>
@@ -132,6 +172,7 @@ function submit() {
       <Box mt={8}>
       </Box>
     </Container>
-  );
+  )}
   };
-export default SignUp;
+
+  export default withStyles(useStyles)(SignUp)
