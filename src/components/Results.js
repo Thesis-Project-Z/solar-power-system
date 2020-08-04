@@ -80,6 +80,9 @@ function ResultPage() {
     setExpanded(!expanded);
   };
   
+  //axios.get
+
+
 //   axios.post('http://localhost:4000/users/register',{ name: state})
 //   .then((res) => {
 //       console.log(res.data)
