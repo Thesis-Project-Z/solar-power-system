@@ -9,12 +9,13 @@ router.get('/', ( req, res) => {
 });
 
 router.post('/add', (req, res) => {
-  const kwh = req.body.kwh;
+  console.log(req.body)
+  const size = req.body.size;
   const area = req.body.area;  
 
   const newSystem = new System({
     area,
-    kwh
+    size
   });
 
   newSystem.save()
@@ -38,7 +39,7 @@ router.post('/update/:id', (req, res) => {
   System.findById(req.params.id)
     .then(system => {
       system.area = req.body.area;
-      system.kwh = req.body.kwh;
+      system.size = req.body.size;
       
       system.save()
         .then(() => res.json('System updated!'))

@@ -72,7 +72,18 @@ onSubmit(e) {
     kwh: this.state.kwh,
     area: this.state.area
   }
-  axios.post('http://localhost:5000/systems/add', System)
+  //calculations
+  const buildSystem = {
+    size: 0, 
+    area: 0
+  }
+
+const dailyConsumption= Math.ceil(this.state.kwh/30);
+ buildSystem.size= Math.ceil(dailyConsumption/4.3);
+ buildSystem.area= 8*buildSystem.size;
+console.log(buildSystem);
+  
+  axios.post('http://localhost:5000/systems/add', buildSystem)
   .then(res => {
     console.log(res);
 })
@@ -96,6 +107,7 @@ render(){
         </Typography>
         <form className={classes.form} noValidate>
         <TextField
+        onChange={this.onChangeKwh}
             variant="outlined"
             margin="normal"
             required
@@ -107,6 +119,7 @@ render(){
             autoFocus
           />
           <TextField
+            onChange={this.onChangeArea}
             variant="outlined"
             margin="normal"
             required
