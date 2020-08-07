@@ -15,6 +15,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { green } from '@material-ui/core/colors';
 // import { STATES } from 'mongoose';
 import axios from 'axios';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 
 const useStyles = theme => ({
@@ -86,12 +87,17 @@ onSubmit(e) {
     name: this.state.name,
     email: this.state.email,
     password: this.state.password
-  }
-  axios.post('http://localhost:5000/user/register',user)
-  .then(res => console.log(res.data));
-  console.log(user);
+  };
 
-}
+  axios.post('http://localhost:5000/user/register', user)
+  .then(res => {
+    console.log(res);
+    this.props.history.push("/signin")
+  })
+  .catch(error => {
+      console.log(error.response)
+  })};
+  
 
 render(){
 const {classes} = this.props
@@ -105,8 +111,11 @@ const {classes} = this.props
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
-        <form className={classes.form} noValidate>
-        <TextField
+        <ValidatorForm className={classes.form} ref="form"
+                onSubmit={this.onSubmit}
+            
+                onError={errors => console.log(errors)}>
+        <TextValidator
             variant="outlined"
             margin="normal"
             required
@@ -119,7 +128,7 @@ const {classes} = this.props
             autoFocus
             onChange={this.onChangeName}
           />
-          <TextField
+          <TextValidator
             variant="outlined"
             margin="normal"
             required
@@ -131,9 +140,11 @@ const {classes} = this.props
             autoComplete="email"
             autoFocus
             onChange={this.onChangeEmail}
+            validators={['required', 'isEmail']}
+            errorMessages={['this field is required', 'email is not valid']}
 
           />
-          <TextField
+          <TextValidator
             variant="outlined"
             margin="normal"
             required
@@ -145,6 +156,8 @@ const {classes} = this.props
             id="password"
             autoComplete="current-password"
             onChange={this.onChangePassword}
+            validators={['required', 'minNumber:6']}
+            errorMessages={['this field is required', 'min characters is 6 or above']}
 
           />
           <Button
@@ -153,7 +166,6 @@ const {classes} = this.props
             variant="contained"
             color="primary"
             className={classes.submit}
-         
           
           >
             Sign Up
@@ -167,7 +179,7 @@ const {classes} = this.props
               </Link>
             </Grid>
           </Grid>
-        </form>
+        </ValidatorForm>
       </div>
       <Box mt={8}>
       </Box>
