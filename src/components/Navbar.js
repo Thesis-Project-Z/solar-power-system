@@ -59,10 +59,6 @@ const Navbar = (props) => {
         },
       },
       {
-        listIcon: <Apps />,
-        listText: "Portfolio",
-      },
-      {
         listIcon: <Settings />,
         listText: "ResultPage",
         onClick: () => {
@@ -72,6 +68,13 @@ const Navbar = (props) => {
     ];
   } else
     menuItems = [
+      {
+        listIcon: <Home />,
+        listText: "Home",
+        onClick: () => {
+          props.history.push("/");
+        },
+      },
       {
         listIcon: <PersonAdd />,
         listText: "SignUp",
@@ -85,13 +88,7 @@ const Navbar = (props) => {
         onClick: () => {
           props.history.push("/signin");
         },
-      },
-      {
-        listIcon: <Home />,
-        listText: "Home",
-        onClick: () => {
-          props.history.push("/");
-        },
+
       },
     ];
 
@@ -151,7 +148,7 @@ const Navbar = (props) => {
           </MobileRightMenuSlider>
           {localStorage.getItem("token") && (
             <IconButton>
-              <MeetingRoom onClick={handleLogout} />
+              <MeetingRoom style={{ color: "#fff747" }} onClick={handleLogout} />
             </IconButton>
           )}
         </Toolbar>
