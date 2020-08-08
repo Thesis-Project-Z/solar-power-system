@@ -72,6 +72,7 @@ class InputData extends Component {
       .post("http://localhost:5000/systems/add", buildSystem)
       .then((res) => {
         console.log(res);
+        this.props.history.push("/results")
       })
       .catch((error) => {
         console.log(error.response);

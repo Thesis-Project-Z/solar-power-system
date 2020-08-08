@@ -5,13 +5,13 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
-const port = 5000; 
+const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
 
 const uri = "mongodb+srv://ziyadbarhoum:1234@cluster0.fevez.mongodb.net/solar?retryWrites=true&w=majority";
-mongoose.connect( uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true } );
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -23,6 +23,8 @@ const authRoute = require('./routes/auth');
 
 app.use('/systems', systemsRouter);
 app.use('/user', authRoute);
+
+//
 
 
 
