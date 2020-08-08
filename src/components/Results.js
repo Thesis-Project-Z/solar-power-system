@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -18,39 +18,15 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import IconButton from "@material-ui/core/IconButton";
 import { red } from "@material-ui/core/colors";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import { withStyles } from '@material-ui/core/styles';
 
 // import { STATES } from 'mongoose';
 const axios = require("axios");
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
+const useStyles = theme => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -59,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: green[500],
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -68,76 +44,145 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-}));
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 240,
+    paddingTop: '56.25%', // 16:9,
+    marginTop: '30'
+  },
 
-function ResultPage() {
-  const classes = useStyles();
+})
 
-  const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+class ResultPage extends Component {
+  constructor(props) {
+    super(props);
+    this.onChangeSize = this.onChangeSize.bind(this);
+    this.onChangeArea = this.onChangeArea.bind(this);
+
+    this.state = {
+      size: 0,
+      area: 0,
+    };
+  }
+
+  componentDidMount = () => {
+    this.getSystem();
   };
 
-  //axios.get('http://localhost:5000/systems/:id', system)
-  //.then
+  getSystem = () => {
+    console.log("inside get data");
+    axios
+      .get("http://localhost:5000/systems")
+      .then((response) => {
+        const system = response.data;
+        this.setState({ size: system.size, area: system.area });
+        console.log(response.data);
+        console.log("Data has been received!!");
+      })
+      .catch((err) => {
+        alert("Error retrieving data!!!", err);
+      });
+  };
 
-  //   axios.post('http://localhost:4000/users/register',{ name: state})
-  //   .then((res) => {
-  //       console.log(res.data)
-  //   }).catch((error) => {
-  //       console.log(error)
-  //   });
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  };
 
-  // this.setState({ name: '', email: '', password: '' })
+  submit = (event) => {
+    event.preventDefault();
 
-  // axios.post( function(error, success){
+    const system = {
+      size: this.state.size,
+      area: this.state.area,
+    };
+  };
 
-  // });
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <DoneOutlineIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5"></Typography>
-        <form className={classes.form} noValidate>
-          <Card className={classes.root}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image="https://sc02.alicdn.com/kf/H5c9a3316d8aa4d718673050efcb28873W.jpg"
-                title="Contemplative Reptile"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  System Specifications
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Confirm
-          </Button>
-          <Grid container>
-            <Grid item xs></Grid>
-            <Grid item></Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}></Box>
-    </Container>
-  );
+  onChangeSize(e) {
+    this.setState({
+      size: e.target.value,
+    });
+  }
+  onChangeArea(e) {
+    this.setState({
+      size: e.target.value,
+    });
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    if (!localStorage.getItem("token")) {
+      window.location = "/signin";
+      return null;
+    }
+
+    return (
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <DoneOutlineIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5"></Typography>
+          <form className={classes.form} noValidate>
+            <Card className={classes.root}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="https://sc02.alicdn.com/kf/H5c9a3316d8aa4d718673050efcb28873W.jpg"
+                  title="system components "
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    System Specifications
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    Size: {this.state.size} KWh
+                    <br />
+                    Area: {this.state.area} m²
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              href="/input"
+
+            >
+              Recalculate
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              href="/"
+
+            >
+              Back to HomePage
+            </Button>
+            <Grid container>
+              <Grid item xs></Grid>
+              <Grid item></Grid>
+            </Grid>
+          </form>
+        </div>
+        <Box mt={8}></Box>
+      </Container>
+    );
+  }
 }
-export default ResultPage;
+export default withStyles(useStyles)(ResultPage);

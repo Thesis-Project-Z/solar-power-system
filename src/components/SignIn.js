@@ -157,8 +157,8 @@ class SignIn extends Component {
               variant="contained"
               color="primary"
               className={classes.submit}
-              // onClick={this.onSubmit}
-              // component={Link} to="/"
+            // onClick={this.onSubmit}
+            // component={Link} to="/"
             >
               Sign In
             </Button>

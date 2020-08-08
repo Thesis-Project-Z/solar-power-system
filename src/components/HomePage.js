@@ -43,7 +43,7 @@ const Home = (props) => {
         alt="increase priority"
       />
       <Typography color="inherit" align="center" variant="h1" marked="center">
-        Start the Change
+        Sustainability for a cleaner world
       </Typography>
       <Typography
         color="inherit"
@@ -57,16 +57,30 @@ const Home = (props) => {
         ability to turn it into electricity in an efficient and cost-effective
         way.
       </Typography>
-      <Button
-        color="secondary"
-        variant="contained"
-        size="large"
-        className={classes.button}
-        component="a"
-        href="./signup"
-      >
-        Register
-      </Button>
+      {!(localStorage.getItem("token")) && (
+        <Button
+          color="secondary"
+          variant="contained"
+          size="large"
+          className={classes.button}
+          component="a"
+          href="./signup"
+        >
+          Register
+        </Button>
+      )}
+      {(localStorage.getItem("token")) && (
+        <Button
+          color="secondary"
+          variant="contained"
+          size="large"
+          className={classes.button}
+          component="a"
+          href="./input"
+        >
+          Create Your System
+        </Button>
+      )}
       <Typography variant="body2" color="inherit" className={classes.more}>
         Discover the experience
       </Typography>

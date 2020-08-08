@@ -37,7 +37,8 @@ function App() {
     <Router>
       <Navbar />
       <CssBaseline />
-      <Route path="/" component={HomePage} />
+      <Route path="/" exact component={HomePage} />
+      <Route path="/Home" component={HomePage} />
       <Route path="/signup" component={SignUp} />
       <Route path="/signin" component={SignIn} />
       <Route path="/input" component={InputData} />

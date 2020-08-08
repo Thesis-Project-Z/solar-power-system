@@ -2,9 +2,9 @@ const router = require("express").Router();
 var System = require("../models/system.model");
 const verify = require("./verifyToken");
 
-router.get("/", verify, (req, res) => {
+router.get("/", (req, res) => {
   System.find()
-    .then((systems) => res.json(systems))
+    .then((systems) => res.json(systems[systems.length - 1]))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
